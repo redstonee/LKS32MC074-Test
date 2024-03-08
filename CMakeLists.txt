@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.20)
 
 # Set the toolchain location if using Windows
-set(TOOLCHAIN_PREFIX "D:/SDKs/gcc-arm-10-2021.10")
+set(TOOLCHAIN_PREFIX "C:/Program Files (x86)/Arm GNU Toolchain arm-none-eabi/13.2 Rel1")
 
 set(CMAKE_TOOLCHAIN_FILE ${CMAKE_CURRENT_LIST_DIR}/toolchain-arm-none-eabi.cmake)
 
@@ -47,7 +47,9 @@ get_filename_component(LD_SCRIPT_PATH_ABS ${LD_SCRIPT_PATH} ABSOLUTE)
 
 set_target_properties(${OUTPUT_EXE_NAME} PROPERTIES
         CXX_STANDARD 17
+        C_STANDARD 11
         CXX_STANDARD_REQUIRED ON
+        C_STANDARD_REQUIRED ON
         LINK_DEPENDS ${LD_SCRIPT_PATH_ABS}
         LINK_FLAGS "-T \"${LD_SCRIPT_PATH_ABS}\""
 )
@@ -70,7 +72,7 @@ if(PYOCD_FOUND)
         add_custom_command(
                 USES_TERMINAL 
                 OUTPUT flash-cmd
-                COMMAND pyocd load ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_EXE_NAME} -t cw32f030c8 # Modify this to match your target
+                COMMAND pyocd load ${CMAKE_CURRENT_BINARY_DIR}/${OUTPUT_EXE_NAME} -t lks32mc074dof8q8 # Modify this to match your target
                 DEPENDS showSize
         )
 else()
